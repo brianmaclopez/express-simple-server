@@ -4,9 +4,12 @@ router.use(logger);
 
 
 function logger(req, res, next) {
-    console.log(req.originalUrl);
-    next();
-};
+    console.log("Request IP: " + req.ip);
+    console.log("Request Method: " + req.method);
+    console.log("Request date: " + new Date());
+    
+    next(); // THIS IS IMPORTANT!
+}
 // Make sure dynamic route is below static routes, 
 // otherwise the dynamic router will interpret the static route 
 // param as a value.
@@ -15,11 +18,11 @@ router.get('/', (req, res) => {
     res.send("User List");
 });
 
-router.get('/new', (req, res) => {
+router.get('/new', logger, (req, res) => {
     res.render("users/new", {firstName: 'Test'});
 });
 
-router.post("/", (req, res) => {
+router.post("/", logger, (req, res) => {
     const isValid = true;
     if (isValid) {
         users.push(req.body.firstName);

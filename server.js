@@ -21,10 +21,20 @@ app.get('/', logger, logger, (req, res) => {
 
 app.use('/users', userRouter);
 
+// function logger(req, res, next) {
+//     console.log(req.originalUrl);
+//     next();
+// };
+
 function logger(req, res, next) {
-    console.log(req.originalUrl);
-    next();
-};
+    console.log("Request IP: " + req.ip);
+    console.log("Request Method: " + req.method);
+    console.log("Request date: " + new Date());
+    
+    next(); // THIS IS IMPORTANT!
+  }
+  
+//   app.use(logger)
 
 
 console.log('Server Running Port: 3000');
